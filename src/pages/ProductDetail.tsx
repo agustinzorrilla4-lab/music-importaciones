@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getProductBySlug, getRelatedProducts } from "@/data/products";
 import { formatPrice, whatsappLink } from "@/lib/format";
@@ -22,6 +22,18 @@ export default function ProductDetail() {
   );
 
   const related = useMemo(() => (product ? getRelatedProducts(product) : []), [product]);
+
+  // Navegación de la galería. Cicla al llegar a los extremos, como Mercado Libre.
+  const imageCount = product?.images.length ?? 0;
+  const touchStartX = useRef<number | null>(null);
+
+  const showPrev = useCallback(() => {
+    setActiveImage((i) => (imageCount ? (i - 1 + imageCount) % imageCount : 0));
+  }, [imageCount]);
+
+  const showNext = useCallback(() => {
+    setActiveImage((i) => (imageCount ? (i + 1) % imageCount : 0));
+  }, [imageCount]);
 
   if (!product || product.hidden) {
     return <NotFound />;
@@ -48,13 +60,60 @@ export default function ProductDetail() {
       <div className="grid gap-10 lg:grid-cols-2">
         {/* Galería */}
         <div>
-          <div className="card overflow-hidden p-0">
+          <div
+            className="card group relative overflow-hidden p-0"
+            role="region"
+            aria-roledescription="carrusel"
+            aria-label={`Fotos de ${product.name}`}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowLeft") { e.preventDefault(); showPrev(); }
+              if (e.key === "ArrowRight") { e.preventDefault(); showNext(); }
+            }}
+            onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+            onTouchEnd={(e) => {
+              if (touchStartX.current === null) return;
+              const delta = e.changedTouches[0].clientX - touchStartX.current;
+              if (delta > 50) showPrev();
+              if (delta < -50) showNext();
+              touchStartX.current = null;
+            }}
+          >
             <ProductImage
               source={product.images[activeImage]}
               label={`${product.name} — foto ${activeImage + 1} de ${product.images.length}`}
               priority
               className="aspect-square w-full"
             />
+
+            {product.images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={showPrev}
+                  aria-label="Foto anterior"
+                  className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-ink/10 bg-white/90 text-xl font-bold text-deep shadow-soft transition-all hover:bg-white hover:shadow-card focus-visible:ring-2 focus-visible:ring-violet sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100"
+                >
+                  <span aria-hidden="true">‹</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={showNext}
+                  aria-label="Foto siguiente"
+                  className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-ink/10 bg-white/90 text-xl font-bold text-deep shadow-soft transition-all hover:bg-white hover:shadow-card focus-visible:ring-2 focus-visible:ring-violet sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100"
+                >
+                  <span aria-hidden="true">›</span>
+                </button>
+
+                <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-deep/75 px-2.5 py-1 text-xs font-semibold text-white">
+                  {activeImage + 1} / {product.images.length}
+                </span>
+
+                <p aria-live="polite" className="sr-only">
+                  Foto {activeImage + 1} de {product.images.length}
+                </p>
+              </>
+            )}
           </div>
           {product.images.length > 1 && (
             <div className="mt-3 flex flex-wrap gap-3" role="group" aria-label={`Miniaturas de ${product.name}`}>
