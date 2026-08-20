@@ -178,10 +178,11 @@ export default function ProductDetail() {
               </span>
               <div>
                 <p className="text-sm font-bold text-ink">
-                  Garantía oficial de {product.warrantyMonths} meses
+                  {product.warrantyOfficial ? "Garantía oficial" : "Garantía"} de{" "}
+                  {product.warrantyMonths} meses
                 </p>
                 <p className="mt-0.5 text-xs text-ink-soft">
-                  Respaldo directo ante fallas de fábrica.
+                  Respaldo ante fallas de fábrica.
                 </p>
               </div>
             </div>

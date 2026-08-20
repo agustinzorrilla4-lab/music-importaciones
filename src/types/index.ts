@@ -57,8 +57,10 @@ export interface Product {
   specs: SpecItem[];
   shipping: string;
   warranty: string;
-  // Meses de garantía oficial. Se muestra destacado en la ficha del producto.
+  // Meses de garantía. Se muestra destacado en la ficha del producto.
   warrantyMonths: number;
+  // true solo cuando la garantía es oficial de fábrica (celulares y parlantes).
+  warrantyOfficial: boolean;
   stock: StockStatus;
   variants?: ProductVariant[];
   relatedIds?: string[];
