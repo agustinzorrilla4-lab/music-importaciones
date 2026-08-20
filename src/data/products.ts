@@ -15,14 +15,11 @@ export const products: Product[] = [
     brand: "Samsung",
     category: "celulares",
     price: 250000,
+    // Solo fotos reales del producto. Las placas de marketing de Samsung Brasil
+    // (en portugués) quedaron en material_pendiente/galaxy-a16-placas-portugues.
     images: [
       "/products/galaxy-a16-4g-frente-dorso.webp",
       "/products/galaxy-a16-4g-colores.webp",
-      "/products/galaxy-a16-4g-pantalla.webp",
-      "/products/galaxy-a16-4g-camaras.webp",
-      "/products/galaxy-a16-4g-proteccion-ip54.webp",
-      "/products/galaxy-a16-4g-nfc.webp",
-      "/products/galaxy-a16-4g-rendimiento.webp",
     ],
     shortDescription: "128 GB, 4 GB de RAM, pantalla Super AMOLED FHD+ de 6,7\" y NFC.",
     description: [

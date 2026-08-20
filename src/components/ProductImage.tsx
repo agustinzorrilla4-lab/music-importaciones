@@ -19,9 +19,10 @@ export default function ProductImage({
   const isImage = !isGradientPlaceholder(source);
   const [from = "28D7FF", to = "8B4DFF"] = source.split(",");
 
+  // Fondo levemente gris: las fotos con fondo blanco no se funden con la tarjeta.
   if (isImage) {
     return (
-      <div className={`overflow-hidden bg-white ${className}`}>
+      <div className={`overflow-hidden bg-[#f2f4f7] ${className}`}>
         <img
           src={asset(source)}
           alt={label}

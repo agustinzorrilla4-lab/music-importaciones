@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { Product } from "@/types";
 import ProductImage from "./ProductImage";
@@ -7,8 +8,13 @@ import WhatsAppButton from "./WhatsAppButton";
 import DeliveryPromise from "./DeliveryPromise";
 
 export default function ProductCard({ product }: { product: Product }) {
-  const { toggleFavorite, isFavorite } = useCart();
+  const { toggleFavorite, isFavorite, addToCart } = useCart();
   const favorite = isFavorite(product.id);
+  const [added, setAdded] = useState(false);
+  const canBuy =
+    product.price !== undefined &&
+    !product.priceOnRequest &&
+    product.stockQuantity > 0;
 
   return (
     <div className="card group flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-cyan/35 hover:shadow-card">
@@ -73,12 +79,27 @@ export default function ProductCard({ product }: { product: Product }) {
 
         <DeliveryPromise compact />
 
-        <WhatsAppButton
-          className="btn-primary mt-auto w-full"
-          message={`Hola, quiero consultar precio y disponibilidad de ${product.name}.`}
-        >
-          Consultar por WhatsApp
-        </WhatsAppButton>
+        <div className="mt-auto space-y-2">
+          {canBuy && (
+            <button
+              type="button"
+              onClick={() => {
+                addToCart(product, 1);
+                setAdded(true);
+                window.setTimeout(() => setAdded(false), 2000);
+              }}
+              className="btn-primary w-full"
+            >
+              {added ? "✓ Agregado" : "Agregar al carrito"}
+            </button>
+          )}
+          <WhatsAppButton
+            className={canBuy ? "btn-whatsapp w-full" : "btn-primary w-full"}
+            message={`Hola, quiero consultar precio y disponibilidad de ${product.name}.`}
+          >
+            Consultar por WhatsApp
+          </WhatsAppButton>
+        </div>
       </div>
     </div>
   );

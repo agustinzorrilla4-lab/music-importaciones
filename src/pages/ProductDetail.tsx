@@ -14,7 +14,8 @@ import NotFound from "./NotFound";
 export default function ProductDetail() {
   const { slug } = useParams();
   const product = slug ? getProductBySlug(slug) : undefined;
-  const { toggleFavorite, isFavorite } = useCart();
+  const { toggleFavorite, isFavorite, addToCart } = useCart();
+  const [added, setAdded] = useState(false);
 
   const [activeImage, setActiveImage] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState<string | undefined>(
@@ -40,6 +41,11 @@ export default function ProductDetail() {
   }
 
   const favorite = isFavorite(product.id);
+  // Solo se puede sumar al carrito lo que tiene precio confirmado y stock.
+  const canBuy =
+    product.price !== undefined &&
+    !product.priceOnRequest &&
+    product.stockQuantity > 0;
   const discount = product.price !== undefined && product.compareAtPrice
     ? Math.round(100 - (product.price / product.compareAtPrice) * 100)
     : null;
@@ -241,7 +247,8 @@ export default function ProductDetail() {
                   {product.warrantyMonths} meses
                 </p>
                 <p className="mt-0.5 text-xs text-ink-soft">
-                  Respaldo ante fallas de fábrica.
+                  Cubre fallas de fabricación con uso normal. Gestionamos el reclamo
+                  nosotros por WhatsApp.
                 </p>
               </div>
             </div>
@@ -255,14 +262,44 @@ export default function ProductDetail() {
               <div>
                 <p className="text-sm font-bold text-ink">Compra protegida 30 días</p>
                 <p className="mt-0.5 text-xs text-ink-soft">
-                  Si el producto no llega o no es lo publicado, te devolvemos el dinero.
+                  Si no llega, llega dañado o no es lo publicado: cambio o devolución
+                  del importe, a tu elección.
                 </p>
+                <Link
+                  to="/garantia-y-cambios"
+                  className="mt-1 inline-block text-xs font-semibold text-violet hover:underline"
+                >
+                  Ver qué cubre y cómo reclamar
+                </Link>
               </div>
             </div>
           </div>
 
+          {canBuy && (
+            <button
+              type="button"
+              onClick={() => {
+                addToCart(product, 1, selectedVariant);
+                setAdded(true);
+                window.setTimeout(() => setAdded(false), 2500);
+              }}
+              className="btn-primary mt-6 w-full"
+            >
+              {added ? "✓ Agregado al carrito" : "Agregar al carrito"}
+            </button>
+          )}
+
+          {added && (
+            <Link
+              to="/carrito"
+              className="mt-2 block text-center text-sm font-semibold text-violet hover:underline"
+            >
+              Ir al carrito y enviar el pedido →
+            </Link>
+          )}
+
           <WhatsAppButton
-            className="btn-whatsapp mt-6 w-full"
+            className={`btn-whatsapp w-full ${canBuy ? "mt-3" : "mt-6"}`}
             message={`Hola, quiero consultar precio y disponibilidad de ${product.name}${selectedVariant ? ` (${selectedVariant})` : ""}.`}
           >
             Consultar por WhatsApp
