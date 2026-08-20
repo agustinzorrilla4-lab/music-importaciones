@@ -164,7 +164,7 @@ export default function ProductDetail() {
           </div>
 
           <div className="mt-3 flex items-center gap-2">
-            <StockBadge status={product.stock} />
+            <StockBadge status={product.stock} quantity={product.stockQuantity} />
             {product.badge === "oferta" && <span className="badge-offer">Oferta</span>}
             {product.badge === "nuevo" && <span className="badge-new">Nuevo</span>}
           </div>

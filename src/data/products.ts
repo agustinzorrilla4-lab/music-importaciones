@@ -50,7 +50,8 @@ export const products: Product[] = [
     warranty: "Garantía oficial de 12 meses. Todas las compras incluyen compra protegida de 30 días.",
     warrantyMonths: 12,
     warrantyOfficial: true,
-    stock: "on_request",
+    stock: "limited",
+    stockQuantity: 2,
     relatedIds: ["p-poco-m7", "p-redmi-13x", "p-cargador-samsung-25w"],
   },
   {
@@ -99,7 +100,8 @@ export const products: Product[] = [
     warranty: "Garantía oficial de 12 meses. Todas las compras incluyen compra protegida de 30 días.",
     warrantyMonths: 12,
     warrantyOfficial: true,
-    stock: "on_request",
+    stock: "limited",
+    stockQuantity: 1,
     relatedIds: ["p-galaxy-a16", "p-redmi-13x"],
   },
   {
@@ -108,7 +110,7 @@ export const products: Product[] = [
     name: "Redmi 13X",
     brand: "Redmi",
     category: "celulares",
-    priceOnRequest: true,
+    price: 270000,
     images: ["/products/redmi-13x-frente-dorso.webp", "/products/redmi-13x-colores.webp"],
     shortDescription: "256 GB de almacenamiento y cámara principal de 108 MP.",
     description: [
@@ -125,7 +127,8 @@ export const products: Product[] = [
     warranty: "Garantía oficial de 12 meses. Todas las compras incluyen compra protegida de 30 días.",
     warrantyMonths: 12,
     warrantyOfficial: true,
-    stock: "on_request",
+    stock: "in_stock",
+    stockQuantity: 20,
     relatedIds: ["p-poco-m7", "p-galaxy-a16"],
   },
   {
@@ -157,7 +160,8 @@ export const products: Product[] = [
     warranty: "Garantía oficial de 12 meses. Todas las compras incluyen compra protegida de 30 días.",
     warrantyMonths: 12,
     warrantyOfficial: true,
-    stock: "on_request",
+    stock: "in_stock",
+    stockQuantity: 10,
     relatedIds: ["p-powerbank-xiaomi", "p-cargador-samsung-25w"],
   },
   {
@@ -195,7 +199,8 @@ export const products: Product[] = [
     warranty: "Garantía de 6 meses. Todas las compras incluyen compra protegida de 30 días.",
     warrantyMonths: 6,
     warrantyOfficial: false,
-    stock: "on_request",
+    stock: "in_stock",
+    stockQuantity: 50,
     relatedIds: ["p-powerbank-xiaomi", "p-tablet-ecopower"],
   },
   {
@@ -234,7 +239,8 @@ export const products: Product[] = [
     warranty: "Garantía de 6 meses. Todas las compras incluyen compra protegida de 30 días.",
     warrantyMonths: 6,
     warrantyOfficial: false,
-    stock: "on_request",
+    stock: "in_stock",
+    stockQuantity: 30,
     relatedIds: ["p-aspiradora-inova", "p-powerbank-xiaomi"],
   },
   {
@@ -261,7 +267,8 @@ export const products: Product[] = [
     warranty: "Garantía de 3 meses. Todas las compras incluyen compra protegida de 30 días.",
     warrantyMonths: 3,
     warrantyOfficial: false,
-    stock: "on_request",
+    stock: "in_stock",
+    stockQuantity: 20,
     relatedIds: ["p-cargador-samsung-25w", "p-jbl-charge-6"],
   },
   {
@@ -289,7 +296,8 @@ export const products: Product[] = [
     warranty: "Garantía de 3 meses. Todas las compras incluyen compra protegida de 30 días.",
     warrantyMonths: 3,
     warrantyOfficial: false,
-    stock: "on_request",
+    stock: "in_stock",
+    stockQuantity: 20,
     relatedIds: ["p-powerbank-xiaomi", "p-galaxy-a16"],
   },
   {
@@ -317,7 +325,8 @@ export const products: Product[] = [
     warranty: "Garantía de 6 meses. Todas las compras incluyen compra protegida de 30 días.",
     warrantyMonths: 6,
     warrantyOfficial: false,
-    stock: "on_request",
+    stock: "in_stock",
+    stockQuantity: 20,
     relatedIds: ["p-aspiradora-inova", "p-powerbank-xiaomi"],
   },
 ];

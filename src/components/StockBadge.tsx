@@ -14,8 +14,22 @@ const STOCK_STYLE: Record<StockStatus, string> = {
   on_request: "border border-cyan/40 bg-cyan/10 text-cyan",
 };
 
-export default function StockBadge({ status }: { status: StockStatus }) {
-  return (
-    <span className={`badge ${STOCK_STYLE[status]}`}>{STOCK_LABEL[status]}</span>
-  );
+export default function StockBadge({
+  status,
+  quantity,
+}: {
+  status: StockStatus;
+  // Cuando se pasa, el texto muestra las unidades reales disponibles.
+  quantity?: number;
+}) {
+  let label = STOCK_LABEL[status];
+
+  if (quantity !== undefined && status !== "on_request") {
+    if (quantity === 0) label = "Sin stock";
+    else if (quantity === 1) label = "¡Última unidad disponible!";
+    else if (quantity <= 5) label = `¡Últimas ${quantity} unidades!`;
+    else label = `Stock disponible: ${quantity} unidades`;
+  }
+
+  return <span className={`badge ${STOCK_STYLE[status]}`}>{label}</span>;
 }

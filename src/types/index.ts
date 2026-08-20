@@ -62,6 +62,8 @@ export interface Product {
   // true solo cuando la garantía es oficial de fábrica (celulares y parlantes).
   warrantyOfficial: boolean;
   stock: StockStatus;
+  // Unidades disponibles. Se muestra en la ficha y marca urgencia cuando quedan pocas.
+  stockQuantity: number;
   variants?: ProductVariant[];
   relatedIds?: string[];
   // Producto identificado pero pendiente de foto/dato antes de mostrarse en la tienda.
