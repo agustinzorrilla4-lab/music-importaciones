@@ -57,6 +57,8 @@ export interface Product {
   specs: SpecItem[];
   shipping: string;
   warranty: string;
+  // Meses de garantía oficial. Se muestra destacado en la ficha del producto.
+  warrantyMonths: number;
   stock: StockStatus;
   variants?: ProductVariant[];
   relatedIds?: string[];

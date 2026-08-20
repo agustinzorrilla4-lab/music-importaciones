@@ -100,16 +100,6 @@ export default function Home() {
                   </Link>
                 ))}
               </div>
-              <div className="mt-5 grid grid-cols-3 gap-2 text-center text-[10px] font-semibold uppercase tracking-wide text-ink-soft sm:text-xs">
-                {categories.slice(0, 3).map((cat) => (
-                  <div
-                    key={cat.slug}
-                    className="rounded-xl border border-white/10 bg-white/5 p-2.5"
-                  >
-                    {cat.name}
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>

@@ -168,6 +168,39 @@ export default function ProductDetail() {
             </div>
           ))}
 
+          <div className="mt-6 space-y-2 rounded-2xl border border-violet/25 bg-violet/[0.06] p-4">
+            <div className="flex items-start gap-3">
+              <span
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet text-base text-white"
+                aria-hidden="true"
+              >
+                ✓
+              </span>
+              <div>
+                <p className="text-sm font-bold text-ink">
+                  Garantía oficial de {product.warrantyMonths} meses
+                </p>
+                <p className="mt-0.5 text-xs text-ink-soft">
+                  Respaldo directo ante fallas de fábrica.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-cyan text-base text-deep"
+                aria-hidden="true"
+              >
+                ⛨
+              </span>
+              <div>
+                <p className="text-sm font-bold text-ink">Compra protegida 30 días</p>
+                <p className="mt-0.5 text-xs text-ink-soft">
+                  Si el producto no llega o no es lo publicado, te devolvemos el dinero.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <WhatsAppButton
             className="btn-whatsapp mt-6 w-full"
             message={`Hola, quiero consultar precio y disponibilidad de ${product.name}${selectedVariant ? ` (${selectedVariant})` : ""}.`}
