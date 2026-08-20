@@ -1,0 +1,325 @@
+import type { Product } from "@/types";
+
+// ─────────────────────────────────────────────────────────────────────────
+// DATOS DE PRODUCTOS — BASE DE TRABAJO
+// Los precios se muestran solo cuando fueron confirmados. El stock y las
+// condiciones comerciales se consultan por WhatsApp hasta tener una fuente
+// vigente. Las especificaciones incluidas son únicamente las confirmadas.
+// ─────────────────────────────────────────────────────────────────────────
+
+export const products: Product[] = [
+  {
+    id: "p-galaxy-a16",
+    slug: "samsung-galaxy-a16-4g-sm-a165f",
+    name: "Samsung Galaxy A16 4G SM-A165F",
+    brand: "Samsung",
+    category: "celulares",
+    price: 250000,
+    images: [
+      "/products/galaxy-a16-4g-frente-dorso.webp",
+      "/products/galaxy-a16-4g-colores.webp",
+      "/products/galaxy-a16-4g-pantalla.webp",
+      "/products/galaxy-a16-4g-camaras.webp",
+      "/products/galaxy-a16-4g-proteccion-ip54.webp",
+      "/products/galaxy-a16-4g-nfc.webp",
+      "/products/galaxy-a16-4g-rendimiento.webp",
+    ],
+    shortDescription: "128 GB, 4 GB de RAM, pantalla Super AMOLED FHD+ de 6,7\" y NFC.",
+    description: [
+      "Samsung Galaxy A16 4G, modelo SM-A165F, con 128 GB de almacenamiento y 4 GB de RAM.",
+      "Pantalla Super AMOLED FHD+ de 6,7\", cámara trasera triple de 50 MP + 5 MP + 2 MP y cámara frontal de 13 MP.",
+      "Batería de 5.000 mAh con carga rápida de hasta 25 W, conectividad 4G LTE, Wi-Fi, Bluetooth y NFC.",
+      "Incluye lector de huella, protección IP54 y soporte Dual SIM.",
+    ],
+    specs: [
+      { label: "Modelo", value: "SM-A165F (4G)" },
+      { label: "Pantalla", value: "6,7\" Super AMOLED FHD+" },
+      { label: "RAM", value: "4 GB" },
+      { label: "Almacenamiento", value: "128 GB" },
+      { label: "Procesador", value: "Octa-Core" },
+      { label: "Cámara trasera", value: "50 MP + 5 MP + 2 MP" },
+      { label: "Cámara frontal", value: "13 MP" },
+      { label: "Batería", value: "5.000 mAh" },
+      { label: "Carga rápida", value: "Hasta 25 W" },
+      { label: "Conectividad", value: "4G LTE, Wi-Fi, Bluetooth y NFC" },
+      { label: "Seguridad", value: "Lector de huella" },
+      { label: "Protección", value: "IP54" },
+      { label: "SIM", value: "Dual SIM" },
+    ],
+    shipping: "Envío gratis. Entrega en el día en zonas habilitadas comprando antes de las 12:00; al resto del país, por Correo Argentino.",
+    warranty: "La garantía se informa para la unidad disponible antes de confirmar la compra.",
+    stock: "on_request",
+    relatedIds: ["p-poco-m7", "p-redmi-13x", "p-cargador-samsung-25w"],
+  },
+  {
+    id: "p-poco-m7",
+    slug: "poco-m7",
+    name: "POCO M7 4G 8 GB + 256 GB",
+    brand: "POCO",
+    category: "celulares",
+    price: 350000,
+    images: [
+      "/products/poco-m7-4g-frente-dorso.webp",
+      "/products/poco-m7-4g-resumen.webp",
+      "/products/poco-m7-4g-bateria.webp",
+      "/products/poco-m7-4g-procesador.webp",
+      "/products/poco-m7-4g-carga-inversa.webp",
+      "/products/poco-m7-4g-camara-audio.webp",
+      "/products/poco-m7-4g-pantalla-tactil.webp",
+      "/products/poco-m7-4g-bateria-extrema.webp",
+      "/products/poco-m7-4g-rendimiento.webp",
+    ],
+    shortDescription: "8 GB de RAM, 256 GB, pantalla FHD+ de 6,9\" hasta 144 Hz y batería de 7.000 mAh.",
+    description: [
+      "POCO M7 4G con 8 GB de RAM y 256 GB de almacenamiento.",
+      "Pantalla FHD+ de 6,9\" con frecuencia de actualización de hasta 144 Hz y procesador Snapdragon 685 Octa-Core de hasta 2,8 GHz.",
+      "Batería de 7.000 mAh, carga rápida de 33 W y carga inversa de 18 W.",
+      "Incluye cámara trasera de 50 MP, cámara frontal de 8 MP, huella lateral, desbloqueo facial, protección IP64 y Xiaomi HyperOS.",
+    ],
+    specs: [
+      { label: "Modelo", value: "POCO M7 4G" },
+      { label: "Pantalla", value: "6,9\" FHD+ de hasta 144 Hz" },
+      { label: "RAM", value: "8 GB" },
+      { label: "Expansión virtual", value: "Hasta 16 GB" },
+      { label: "Almacenamiento", value: "256 GB" },
+      { label: "Procesador", value: "Snapdragon 685 Octa-Core, hasta 2,8 GHz" },
+      { label: "Batería", value: "7.000 mAh" },
+      { label: "Carga rápida", value: "33 W" },
+      { label: "Carga inversa", value: "18 W" },
+      { label: "Cámara trasera", value: "50 MP" },
+      { label: "Cámara frontal", value: "8 MP" },
+      { label: "Conectividad", value: "4G LTE, Wi-Fi y Bluetooth 5.0" },
+      { label: "Seguridad", value: "Huella lateral y desbloqueo facial" },
+      { label: "Protección", value: "IP64 contra polvo y salpicaduras" },
+      { label: "Sistema operativo", value: "Xiaomi HyperOS" },
+    ],
+    shipping: "Envío gratis. Entrega en el día en zonas habilitadas comprando antes de las 12:00; al resto del país, por Correo Argentino.",
+    warranty: "La garantía se informa para la unidad disponible antes de confirmar la compra.",
+    stock: "on_request",
+    relatedIds: ["p-galaxy-a16", "p-redmi-13x"],
+  },
+  {
+    id: "p-redmi-13x",
+    slug: "redmi-13x",
+    name: "Redmi 13X",
+    brand: "Redmi",
+    category: "celulares",
+    priceOnRequest: true,
+    images: ["/products/redmi-13x-frente-dorso.webp", "/products/redmi-13x-colores.webp"],
+    shortDescription: "256 GB de almacenamiento y cámara principal de 108 MP.",
+    description: [
+      "Versión con 256 GB de almacenamiento.",
+      "Cámara principal de 108 MP.",
+      "Consultá color, memoria RAM y demás características de la variante disponible antes de confirmar la compra.",
+    ],
+    specs: [
+      { label: "Almacenamiento", value: "256 GB" },
+      { label: "Cámara principal", value: "108 MP" },
+      { label: "Otras especificaciones", value: "Consultar variante disponible" },
+    ],
+    shipping: "Envío gratis. Entrega en el día en zonas habilitadas comprando antes de las 12:00; al resto del país, por Correo Argentino.",
+    warranty: "La garantía se informa para la unidad disponible antes de confirmar la compra.",
+    stock: "on_request",
+    relatedIds: ["p-poco-m7", "p-galaxy-a16"],
+  },
+  {
+    id: "p-jbl-charge-6",
+    slug: "parlante-jbl-charge-6",
+    name: "Parlante JBL Charge 6",
+    brand: "JBL",
+    category: "audio",
+    price: 260000,
+    images: [
+      "/products/jbl-charge-6-principal.webp",
+      "/products/jbl-charge-6-perspectiva.webp",
+      "/products/jbl-charge-6-radiador.webp",
+      "/products/jbl-charge-6-controles.webp",
+      "/products/jbl-charge-6-puertos.webp",
+      "/products/jbl-charge-6-resistencia.webp",
+      "/products/jbl-charge-6-uso.webp",
+    ],
+    shortDescription: "Parlante portátil JBL Charge 6. Consultá disponibilidad, color y ficha de la unidad.",
+    description: [
+      "La disponibilidad de la unidad, el color y las especificaciones se confirman antes de comprar.",
+      "No publicamos potencia, autonomía o certificaciones sin validar la versión disponible.",
+    ],
+    specs: [
+      { label: "Modelo", value: "JBL Charge 6" },
+      { label: "Especificaciones", value: "Se confirman según unidad disponible" },
+    ],
+    shipping: "Envío gratis. Entrega en el día en zonas habilitadas comprando antes de las 12:00; al resto del país, por Correo Argentino.",
+    warranty: "La garantía se informa para la unidad disponible antes de confirmar la compra.",
+    stock: "on_request",
+    relatedIds: ["p-powerbank-xiaomi", "p-cargador-samsung-25w"],
+  },
+  {
+    id: "p-aspiradora-inova",
+    slug: "aspiradora-portatil-inova-ap-321",
+    name: "Aspiradora portátil Inova AP-321",
+    brand: "Inova",
+    category: "aspiradoras-y-limpieza",
+    price: 55000,
+    images: [
+      "/products/inova-ap-321-soplado.webp",
+      "/products/inova-ap-321-succion.webp",
+      "/products/inova-ap-321-funciones.webp",
+      "/products/inova-ap-321-auto.webp",
+      "/products/inova-ap-321-precision.webp",
+      "/products/inova-ap-321-uso-auto.webp",
+    ],
+    shortDescription: "Aspiradora portátil 2 en 1 con función de aspirado y soplado para hogar y auto.",
+    description: [
+      "Inova AP-321 de uso portátil para el hogar y el auto.",
+      "Combina funciones de aspirado y soplado. Las imágenes muestran boquillas intercambiables para espacios reducidos y superficies.",
+      "Incluye filtro lavable y extraíble. Se carga por USB a 5 V.",
+      "Autonomía aproximada de 45 a 50 minutos por carga completa.",
+    ],
+    specs: [
+      { label: "Modelo", value: "AP-321" },
+      { label: "Funciones", value: "Aspirado y soplado" },
+      { label: "Uso", value: "Hogar y auto" },
+      { label: "Filtro", value: "Lavable y extraíble" },
+      { label: "Carga", value: "USB 5 V" },
+      { label: "Autonomía informada", value: "Aproximadamente 45 a 50 minutos" },
+      { label: "Accesorios", value: "Boquillas intercambiables" },
+    ],
+    shipping: "Envío gratis. Entrega en el día en zonas habilitadas comprando antes de las 12:00; al resto del país, por Correo Argentino.",
+    warranty: "La garantía se informa para la unidad disponible antes de confirmar la compra.",
+    stock: "on_request",
+    relatedIds: ["p-powerbank-xiaomi", "p-tablet-ecopower"],
+  },
+  {
+    id: "p-licuadora-inova-portatil",
+    slug: "licuadora-portatil-inova-400ml",
+    name: "Licuadora portátil Inova 400 ml",
+    brand: "Inova",
+    category: "pequenos-electrodomesticos",
+    price: 25000,
+    images: [
+      "/products/licuadora-inova-portatil-kit.webp",
+      "/products/licuadora-inova-portatil-dimensiones.webp",
+      "/products/licuadora-inova-portatil-usos.webp",
+      "/products/licuadora-inova-portatil-frutas.webp",
+      "/products/licuadora-inova-portatil-batidos.webp",
+      "/products/licuadora-inova-portatil-caracteristicas.webp",
+      "/products/licuadora-inova-portatil-usb.webp",
+      "/products/licuadora-inova-portatil-bateria.webp",
+    ],
+    shortDescription: "Licuadora portátil recargable por USB con vaso de vidrio de 400 ml.",
+    description: [
+      "Licuadora portátil Inova con vaso de 400 ml y 6 cuchillas de acero inoxidable.",
+      "Recargable por USB. El material del producto informa batería de 1.500 mAh y hasta 15 licuados por carga.",
+      "Apta para frutas y verduras, batidos, jugos, aderezos, salsas y sopas frías.",
+    ],
+    specs: [
+      { label: "Capacidad", value: "400 ml" },
+      { label: "Cuchillas", value: "6 de acero inoxidable" },
+      { label: "Vaso", value: "Vidrio" },
+      { label: "Batería", value: "1.500 mAh" },
+      { label: "Autonomía informada", value: "Hasta 15 licuados por carga" },
+      { label: "Carga", value: "USB recargable" },
+      { label: "Medidas", value: "24,5 × 9,0 × 8,7 cm" },
+    ],
+    shipping: "Envío gratis. Entrega en el día en zonas habilitadas comprando antes de las 12:00; al resto del país, por Correo Argentino.",
+    warranty: "La garantía se informa para la unidad disponible antes de confirmar la compra.",
+    stock: "on_request",
+    relatedIds: ["p-aspiradora-inova", "p-powerbank-xiaomi"],
+  },
+  {
+    id: "p-powerbank-xiaomi",
+    slug: "powerbank-xiaomi-10000mah",
+    name: "Powerbank Xiaomi 10.000 mAh 33 W",
+    brand: "Xiaomi",
+    category: "cargadores-y-accesorios",
+    priceOnRequest: true,
+    // Producto pendiente: se muestra cuando estén cargadas las fotografías reales y los datos confirmados.
+    hidden: true,
+    images: ["FF4D4F,8B4DFF", "28D7FF,FF4D4F"],
+    shortDescription: "Batería externa Xiaomi de 10.000 mAh con potencia de 33 W.",
+    description: [
+      "Ideal para viajes, trabajo o uso diario cuando no hay un enchufe cerca.",
+      "Antes de comprar confirmamos el modelo, los puertos y la compatibilidad de carga de la unidad disponible.",
+    ],
+    specs: [
+      { label: "Capacidad", value: "10.000 mAh" },
+      { label: "Potencia", value: "33 W" },
+      { label: "Puertos y protocolos", value: "Consultar modelo disponible" },
+    ],
+    shipping: "Envío gratis. Entrega en el día en zonas habilitadas comprando antes de las 12:00; al resto del país, por Correo Argentino.",
+    warranty: "La garantía se informa para la unidad disponible antes de confirmar la compra.",
+    stock: "on_request",
+    relatedIds: ["p-cargador-samsung-25w", "p-jbl-charge-6"],
+  },
+  {
+    id: "p-cargador-samsung-25w",
+    slug: "cargador-samsung-25w",
+    name: "Cargador Samsung 25 W",
+    brand: "Samsung",
+    category: "cargadores-y-accesorios",
+    priceOnRequest: true,
+    // Producto pendiente: se muestra cuando estén cargadas las fotografías reales y los datos confirmados.
+    hidden: true,
+    images: ["8B4DFF,28D7FF", "FF4FB9,28D7FF"],
+    shortDescription: "Cargador Samsung de 25 W con USB-C y Super Fast Charging.",
+    description: [
+      "Compatible con Super Fast Charging en equipos compatibles.",
+      "Antes de comprar confirmamos la unidad, el contenido de caja y la compatibilidad con tu equipo.",
+    ],
+    specs: [
+      { label: "Potencia", value: "25 W" },
+      { label: "Conector", value: "USB-C" },
+      { label: "Carga", value: "Super Fast Charging" },
+      { label: "Originalidad y contenido", value: "Se validan con la unidad disponible" },
+    ],
+    shipping: "Envío gratis. Entrega en el día en zonas habilitadas comprando antes de las 12:00; al resto del país, por Correo Argentino.",
+    warranty: "La garantía se informa para la unidad disponible antes de confirmar la compra.",
+    stock: "on_request",
+    relatedIds: ["p-powerbank-xiaomi", "p-galaxy-a16"],
+  },
+  {
+    id: "p-tablet-ecopower",
+    slug: "tablet-ecopower-ep-a100",
+    name: "Tablet EcoPower EP-A100 256 GB con teclado",
+    brand: "EcoPower",
+    category: "tablets",
+    priceOnRequest: true,
+    // Producto pendiente: se muestra cuando estén cargadas las fotografías reales y los datos confirmados.
+    hidden: true,
+    images: ["28D7FF,A7F542", "8B4DFF,FF4FB9"],
+    shortDescription: "Tablet EcoPower EP-A100 de 256 GB con teclado. RAM informada: 8 GB.",
+    description: [
+      "Incluye teclado según la presentación informada; se confirma el contenido de caja antes de comprar.",
+      "La memoria RAM informada es de 8 GB. No se publican especificaciones adicionales sin validar la unidad disponible.",
+    ],
+    specs: [
+      { label: "Modelo", value: "EP-A100" },
+      { label: "Almacenamiento", value: "256 GB" },
+      { label: "RAM informada", value: "8 GB" },
+      { label: "Accesorio", value: "Teclado" },
+    ],
+    shipping: "Envío gratis. Entrega en el día en zonas habilitadas comprando antes de las 12:00; al resto del país, por Correo Argentino.",
+    warranty: "La garantía se informa para la unidad disponible antes de confirmar la compra.",
+    stock: "on_request",
+    relatedIds: ["p-aspiradora-inova", "p-powerbank-xiaomi"],
+  },
+];
+
+// Productos que se muestran en la tienda. Los pendientes de foto/dato
+// quedan en `products` para no perder la ficha, pero no aparecen en catálogo,
+// destacados, categorías ni relacionados.
+export const visibleProducts: Product[] = products.filter((p) => !p.hidden);
+
+export function getProductBySlug(slug: string): Product | undefined {
+  return products.find((p) => p.slug === slug);
+}
+
+export function getProductById(id: string): Product | undefined {
+  return products.find((p) => p.id === id);
+}
+
+export function getRelatedProducts(product: Product): Product[] {
+  if (!product.relatedIds) return [];
+  return product.relatedIds
+    .map((id) => getProductById(id))
+    .filter((p): p is Product => Boolean(p) && !p!.hidden);
+}

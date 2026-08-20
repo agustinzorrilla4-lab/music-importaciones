@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid theme("colors.cyan.DEFAULT");
+    outline-offset: 2px;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand-gradient text-white shadow-soft hover:shadow-lift hover:-translate-y-0.5 focus-visible:ring-violet;
+  }
+
+  .btn-secondary {
+    @apply btn bg-panel text-ink hover:bg-white/10 focus-visible:ring-ink/30;
+  }
+
+  .btn-whatsapp {
+    @apply btn bg-[#25D366] text-white shadow-soft hover:brightness-105 hover:-translate-y-0.5 focus-visible:ring-[#25D366];
+  }
+
+  .btn-outline {
+    @apply btn border border-cyan/30 bg-transparent text-ink hover:border-violet hover:text-violet;
+  }
+
+  .card {
+    @apply rounded-2xl border border-cyan/10 bg-panel shadow-soft;
+  }
+
+  .section {
+    @apply py-12 sm:py-16;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+
+  .badge-offer {
+    @apply badge bg-danger text-white;
+  }
+
+  .badge-new {
+    @apply badge bg-lime text-deep;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-white/15 bg-panel px-4 py-2.5 text-sm text-ink placeholder:text-ink-faint focus:border-violet focus:outline-none focus:ring-2 focus:ring-violet/20;
+  }
+
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.18em] text-violet;
+  }
+}
