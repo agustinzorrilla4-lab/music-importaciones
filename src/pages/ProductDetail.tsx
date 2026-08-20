@@ -266,10 +266,10 @@ export default function ProductDetail() {
                   del importe, a tu elección.
                 </p>
                 <Link
-                  to="/garantia-y-cambios"
+                  to="/cambios-devoluciones-y-reembolsos"
                   className="mt-1 inline-block text-xs font-semibold text-violet hover:underline"
                 >
-                  Ver qué cubre y cómo reclamar
+                  Ver cambios, devoluciones y reembolsos
                 </Link>
               </div>
             </div>

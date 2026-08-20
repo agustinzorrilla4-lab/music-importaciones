@@ -9,6 +9,7 @@ const INFO_LINKS = [
   { label: "Envíos", to: "/envios" },
   { label: "Pagos", to: "/pagos" },
   { label: "Garantía y cambios", to: "/garantia-y-cambios" },
+  { label: "Cambios, devoluciones y reembolsos", to: "/cambios-devoluciones-y-reembolsos" },
   { label: "Contacto", to: "/contacto" },
   { label: "Política de privacidad", to: "/privacidad" },
 ];

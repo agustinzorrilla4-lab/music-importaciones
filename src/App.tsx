@@ -12,6 +12,7 @@ import FAQ from "@/pages/FAQ";
 import Shipping from "@/pages/Shipping";
 import Payments from "@/pages/Payments";
 import Warranty from "@/pages/Warranty";
+import Returns from "@/pages/Returns";
 import Contact from "@/pages/Contact";
 import Privacy from "@/pages/Privacy";
 import NotFound from "@/pages/NotFound";
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/envios" element={<Shipping />} />
           <Route path="/pagos" element={<Payments />} />
           <Route path="/garantia-y-cambios" element={<Warranty />} />
+          <Route path="/cambios-devoluciones-y-reembolsos" element={<Returns />} />
           <Route path="/contacto" element={<Contact />} />
           <Route path="/privacidad" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />
