@@ -3,15 +3,8 @@ import { Link } from "react-router-dom";
 
 const ARGENTINA_TIME_ZONE = "America/Argentina/Buenos_Aires";
 const CUTOFF_HOUR = 12;
-
-type DeliveryState =
-  // Día hábil antes del corte: llega hoy.
-  | { kind: "same_day"; hours: number; minutes: number }
-  // Día hábil después del corte, con próximo día hábil también hábil (ej. martes 15h → llega miércoles).
-  | { kind: "next_business_day"; label: string }
-  // Fin de semana o víspera de fin de semana (viernes tarde, sábado, domingo).
-  // También cubre feriados si en el futuro se conecta un calendario.
-  | { kind: "non_business_day"; label: string };
+const CUTOFF_SECONDS = CUTOFF_HOUR * 3600;
+const DAY_SECONDS = 86400;
 
 const WEEKDAY_LABELS = [
   "domingo",
@@ -23,11 +16,23 @@ const WEEKDAY_LABELS = [
   "sábado",
 ];
 
-// Devuelve hora y día de la semana en Argentina.
+type DeliveryState = {
+  // Segundos que faltan para el próximo corte de las 12:00 de un día hábil.
+  secondsLeft: number;
+  // Cómo se nombra el día de entrega: "HOY" o "el martes".
+  deliveryLabel: string;
+  // true cuando la entrega cae el mismo día (compra antes del corte en día hábil).
+  sameDay: boolean;
+};
+
+function isWeekend(dow: number): boolean {
+  return dow === 0 || dow === 6;
+}
+
+// Hora y día de la semana en Buenos Aires, sin depender del huso del visitante.
 function getArgentinaNow(now: Date) {
   const parts = new Intl.DateTimeFormat("es-AR", {
     timeZone: ARGENTINA_TIME_ZONE,
-    weekday: "short",
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
@@ -36,94 +41,82 @@ function getArgentinaNow(now: Date) {
     second: "2-digit",
     hourCycle: "h23",
   }).formatToParts(now);
-  const values = Object.fromEntries(parts.map((p) => [p.type, p.value]));
-  const y = Number(values.year);
-  const m = Number(values.month);
-  const d = Number(values.day);
-  // Reconstruimos una Date UTC con los valores de Buenos Aires para calcular
-  // el día de la semana sin depender del huso del cliente.
-  const dow = new Date(Date.UTC(y, m - 1, d)).getUTCDay(); // 0 = domingo, 6 = sábado
+  const v = Object.fromEntries(parts.map((p) => [p.type, p.value]));
+  const dow = new Date(
+    Date.UTC(Number(v.year), Number(v.month) - 1, Number(v.day))
+  ).getUTCDay();
   return {
     dow,
-    hour: Number(values.hour),
-    minute: Number(values.minute),
-    second: Number(values.second),
+    secondsOfDay:
+      Number(v.hour) * 3600 + Number(v.minute) * 60 + Number(v.second),
   };
-}
-
-function labelForNextBusinessDay(dowToday: number): string {
-  // Del día actual, salteamos sábado y domingo hasta encontrar un día hábil.
-  let d = (dowToday + 1) % 7;
-  while (d === 0 || d === 6) d = (d + 1) % 7;
-  // Si es exactamente mañana, usamos "mañana"; si no, "el <día>".
-  const isTomorrow = d === (dowToday + 1) % 7;
-  return isTomorrow ? "mañana" : `el ${WEEKDAY_LABELS[d]}`;
 }
 
 function getDeliveryState(now = new Date()): DeliveryState {
-  const { dow, hour, minute, second } = getArgentinaNow(now);
-  const isWeekend = dow === 0 || dow === 6;
+  const { dow, secondsOfDay } = getArgentinaNow(now);
 
-  if (isWeekend) {
+  // Día hábil y todavía no pasó el corte: se entrega hoy mismo.
+  if (!isWeekend(dow) && secondsOfDay < CUTOFF_SECONDS) {
     return {
-      kind: "non_business_day",
-      label: `el ${WEEKDAY_LABELS[1]}`, // "el lunes"
+      secondsLeft: CUTOFF_SECONDS - secondsOfDay,
+      deliveryLabel: "HOY",
+      sameDay: true,
     };
   }
 
-  const secondsUntilCutoff = (CUTOFF_HOUR - hour) * 3600 - minute * 60 - second;
-
-  if (secondsUntilCutoff > 0) {
-    const totalMinutes = Math.ceil(secondsUntilCutoff / 60);
-    return {
-      kind: "same_day",
-      hours: Math.floor(totalMinutes / 60),
-      minutes: totalMinutes % 60,
-    };
-  }
+  // Ya pasó el corte (o es fin de semana): la entrega pasa al próximo día
+  // hábil, y la cuenta regresiva apunta al corte de ese día.
+  let daysAhead = 1;
+  while (isWeekend((dow + daysAhead) % 7)) daysAhead += 1;
 
   return {
-    kind: "next_business_day",
-    label: labelForNextBusinessDay(dow),
+    secondsLeft:
+      DAY_SECONDS - secondsOfDay + (daysAhead - 1) * DAY_SECONDS + CUTOFF_SECONDS,
+    deliveryLabel: `el ${WEEKDAY_LABELS[(dow + daysAhead) % 7]}`,
+    sameDay: false,
   };
 }
 
-function primaryLine(state: DeliveryState): string {
-  if (state.kind === "same_day") return "Llega hoy";
-  return `Llega ${state.label}`;
+function formatCountdown(totalSeconds: number): string {
+  const s = Math.max(0, totalSeconds);
+  const hh = Math.floor(s / 3600);
+  const mm = Math.floor((s % 3600) / 60);
+  const ss = s % 60;
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${pad(hh)}:${pad(mm)}:${pad(ss)}`;
 }
 
 export default function DeliveryPromise({ compact = false }: { compact?: boolean }) {
   const [delivery, setDelivery] = useState<DeliveryState>(() => getDeliveryState());
 
   useEffect(() => {
-    const timer = window.setInterval(() => setDelivery(getDeliveryState()), 30_000);
+    // Cada segundo, para que el reloj corra a la vista del comprador.
+    const timer = window.setInterval(() => setDelivery(getDeliveryState()), 1000);
     return () => window.clearInterval(timer);
   }, []);
 
-  const line1 = primaryLine(delivery);
-  const countdown =
-    delivery.kind === "same_day"
-      ? `${delivery.hours} h ${String(delivery.minutes).padStart(2, "0")} min`
-      : null;
+  const countdown = formatCountdown(delivery.secondsLeft);
 
   if (compact) {
     return (
-      <div className="rounded-xl border border-[#00a650]/20 bg-[#00a650]/[0.06] px-3 py-2 text-xs">
-        <p className="font-bold text-[#00a650]">Envío gratis</p>
-        <p className="mt-0.5 font-semibold text-ink" aria-live="polite">
-          {line1}
-        </p>
-        {countdown && (
-          <p className="mt-0.5 text-ink-soft">
-            Comprá dentro de <time>{countdown}</time>
-          </p>
-        )}
-        {delivery.kind === "non_business_day" && (
-          <p className="mt-0.5 text-ink-soft">
-            Envíos de lunes a viernes.
-          </p>
-        )}
+      <div className="rounded-xl border border-[#00a650]/25 bg-[#00a650]/[0.07] p-2.5">
+        <div className="flex items-start gap-2">
+          <span className="shrink-0 text-base leading-none" aria-hidden="true">
+            🚚
+          </span>
+          <div className="min-w-0 text-[11px] leading-snug text-ink-soft">
+            <p aria-live="off">
+              Comprá dentro de{" "}
+              <time className="font-bold tabular-nums text-ink">{countdown}</time> y{" "}
+              <span className="font-bold text-[#00a650]">
+                lo recibís {delivery.deliveryLabel.toUpperCase()}
+              </span>
+            </p>
+            <p className="mt-0.5 font-semibold text-[#00a650]">
+              Envío gratis en zonas habilitadas
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -131,33 +124,32 @@ export default function DeliveryPromise({ compact = false }: { compact?: boolean
   return (
     <div className="rounded-2xl border border-[#00a650]/25 bg-[#00a650]/[0.07] p-4">
       <div className="flex items-start gap-3">
-        <span
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#00a650] text-lg text-white"
-          aria-hidden="true"
-        >
-          ◷
+        <span className="shrink-0 text-2xl leading-none" aria-hidden="true">
+          🚚
         </span>
         <div>
-          <p className="text-sm font-bold text-[#00a650]">Envío gratis</p>
-          <p className="mt-0.5 text-base font-bold text-ink" aria-live="polite">
-            {line1}
+          <p className="text-base leading-snug text-ink-soft" aria-live="off">
+            Comprá dentro de{" "}
+            <time className="text-lg font-extrabold tabular-nums text-ink">
+              {countdown}
+            </time>{" "}
+            y{" "}
+            <span className="font-extrabold text-[#00a650]">
+              lo recibís {delivery.deliveryLabel.toUpperCase()}
+            </span>
           </p>
-          {delivery.kind === "same_day" && (
-            <p className="mt-1 text-sm text-ink-soft">
-              Comprá dentro de <time className="font-semibold text-ink">{countdown}</time> para recibirlo hoy en zonas habilitadas.
-            </p>
-          )}
-          {delivery.kind === "next_business_day" && (
-            <p className="mt-1 text-sm text-ink-soft">
-              El corte de las 12:00 ya finalizó. Tu pedido llega el próximo día hábil en zonas habilitadas.
-            </p>
-          )}
-          {delivery.kind === "non_business_day" && (
-            <p className="mt-1 text-sm text-ink-soft">
-              Los envíos se realizan de lunes a viernes. Podés hacer tu pedido ahora y lo despachamos el próximo día hábil.
-            </p>
-          )}
-          <Link to="/envios" className="mt-2 inline-block text-xs font-semibold text-violet hover:underline">
+          <p className="mt-1 text-sm font-bold text-[#00a650]">
+            Envío gratis en el día en zonas habilitadas
+          </p>
+          <p className="mt-1 text-xs text-ink-soft">
+            {delivery.sameDay
+              ? "Entregas de lunes a viernes. El corte es a las 12:00 de Buenos Aires."
+              : "Entregas de lunes a viernes. Hacé tu pedido ahora y lo despachamos el próximo día hábil."}
+          </p>
+          <Link
+            to="/envios"
+            className="mt-2 inline-block text-xs font-semibold text-violet hover:underline"
+          >
             Ver localidades con entrega en el día
           </Link>
         </div>
