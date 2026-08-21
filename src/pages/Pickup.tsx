@@ -32,7 +32,49 @@ export default function Pickup() {
           está como esperabas, no te lo llevás. Sin discusiones después.
         </p>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+        {/* El pago siempre va por el checkout: es lo que protege al comprador. */}
+        <div className="mt-8 rounded-2xl border border-cyan/30 bg-cyan/[0.08] p-4">
+          <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-cyan">
+            Pagás online, retirás en persona
+          </p>
+          <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
+            El pago se hace siempre desde la tienda, con tu compra registrada y
+            protegida. El retiro es solo para que recibas el equipo en mano y lo
+            revises. <strong className="text-ink">Nunca vas a tener que pagar en
+            efectivo en el punto de retiro</strong>: si alguien te lo pide, no somos
+            nosotros.
+          </p>
+        </div>
+
+        <h2 className="mt-10 text-xl font-bold text-ink">Cómo funciona</h2>
+        <ol className="mt-4 space-y-3 text-sm text-ink-soft">
+          <li className="flex gap-3">
+            <span className="font-bold text-cyan">1.</span>
+            <span>
+              Comprás y pagás en la tienda, con tu comprobante y tu número de orden.
+            </span>
+          </li>
+          <li className="flex gap-3">
+            <span className="font-bold text-cyan">2.</span>
+            <span>
+              Coordinamos día y hora por WhatsApp. Llevamos tu equipo ese día:{" "}
+              <strong className="text-ink">no queda stock guardado en el local</strong>.
+            </span>
+          </li>
+          <li className="flex gap-3">
+            <span className="font-bold text-cyan">3.</span>
+            <span>
+              Vas con tu número de orden y tu DNI. Solo se entrega a quien compró.
+            </span>
+          </li>
+          <li className="flex gap-3">
+            <span className="font-bold text-cyan">4.</span>
+            <span>Verificás el equipo con nosotros y recién ahí te lo llevás.</span>
+          </li>
+        </ol>
+
+        <h2 className="mt-10 text-xl font-bold text-ink">Qué verificamos juntos</h2>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {PASOS.map((p, i) => (
             <div key={p.titulo} className="card flex gap-3 p-4">
               <span
@@ -56,6 +98,10 @@ export default function Pickup() {
           <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
             Estamos cerrando la dirección y el horario del punto de retiro. Mientras
             tanto, escribinos por WhatsApp y coordinamos la entrega con vos.
+          </p>
+          <p className="mt-1.5 text-xs text-ink-faint">
+            El punto de retiro es un local asociado que nos presta el espacio para la
+            entrega. No es una sucursal de Music Importaciones.
           </p>
         </div>
 
