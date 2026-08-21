@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# El sitemap se ajusta con el dominio definitivo antes de publicar.
+# Sitemap: https://www.tu-dominio.com.ar/sitemap.xml
