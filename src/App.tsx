@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import AnnouncementBar from "@/components/AnnouncementBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Home from "@/pages/Home";
@@ -13,6 +14,7 @@ import Shipping from "@/pages/Shipping";
 import Payments from "@/pages/Payments";
 import Warranty from "@/pages/Warranty";
 import Returns from "@/pages/Returns";
+import Pickup from "@/pages/Pickup";
 import Contact from "@/pages/Contact";
 import Privacy from "@/pages/Privacy";
 import NotFound from "@/pages/NotFound";
@@ -26,6 +28,7 @@ export default function App() {
       >
         Saltar al contenido principal
       </a>
+      <AnnouncementBar />
       <Header />
       <main id="main-content" className="flex-1">
         <Routes>
@@ -41,6 +44,7 @@ export default function App() {
           <Route path="/pagos" element={<Payments />} />
           <Route path="/garantia-y-cambios" element={<Warranty />} />
           <Route path="/cambios-devoluciones-y-reembolsos" element={<Returns />} />
+          <Route path="/retiro" element={<Pickup />} />
           <Route path="/contacto" element={<Contact />} />
           <Route path="/privacidad" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />

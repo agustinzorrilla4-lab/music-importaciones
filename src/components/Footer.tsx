@@ -7,6 +7,7 @@ const INFO_LINKS = [
   { label: "Nosotros", to: "/nosotros" },
   { label: "Preguntas frecuentes", to: "/preguntas-frecuentes" },
   { label: "Envíos", to: "/envios" },
+  { label: "Retirá y probalo", to: "/retiro" },
   { label: "Pagos", to: "/pagos" },
   { label: "Garantía y cambios", to: "/garantia-y-cambios" },
   { label: "Cambios, devoluciones y reembolsos", to: "/cambios-devoluciones-y-reembolsos" },
@@ -92,9 +93,30 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10 py-5">
-        <p className="container-page text-center text-xs text-ink-faint">
-          © {new Date().getFullYear()} Music Importaciones — Todos los derechos reservados.
-        </p>
+        <div className="container-page space-y-2 text-center text-xs text-ink-faint">
+          <p>
+            © {new Date().getFullYear()} Music Importaciones · CUIT{" "}
+            <span className="font-semibold tabular-nums text-ink-soft">20-36826567-6</span>{" "}
+            · Todos los derechos reservados.
+          </p>
+          <p>
+            <a
+              href="https://www.argentina.gob.ar/produccion/defensadelconsumidor/formulario"
+              target="_blank"
+              rel="noreferrer"
+              className="underline underline-offset-2 hover:text-cyan"
+            >
+              Defensa de las y los consumidores
+            </a>
+            . Para reclamos ingresá acá. {" / "}
+            <Link
+              to="/cambios-devoluciones-y-reembolsos"
+              className="underline underline-offset-2 hover:text-cyan"
+            >
+              Botón de arrepentimiento
+            </Link>
+          </p>
+        </div>
       </div>
     </footer>
   );

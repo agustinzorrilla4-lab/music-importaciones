@@ -2,6 +2,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getProductBySlug, getRelatedProducts } from "@/data/products";
 import { formatPrice, whatsappLink } from "@/lib/format";
+import { precioTransferencia, precioSinImpuestos, planCuotas } from "@/lib/pricing";
 import ProductImage from "@/components/ProductImage";
 import ProductCard from "@/components/ProductCard";
 import StockBadge from "@/components/StockBadge";
@@ -192,16 +193,55 @@ export default function ProductDetail() {
                 <p className="mt-1 text-sm text-ink-soft">Los valores se confirman por WhatsApp antes de comprar.</p>
               </>
             ) : (
-              <p className="text-3xl font-extrabold text-ink">{formatPrice(product.price)}</p>
-            )}
-            {product.price !== undefined && product.installments && (
-              <p className="mt-1 text-sm text-ink-soft">
-                {product.installments.count}x {formatPrice(product.installments.amount)}{" "}
-                {product.installments.interestFree ? "sin interés" : ""} (medios de pago
-                a confirmar)
-              </p>
+              <>
+                <p className="text-3xl font-extrabold text-ink">{formatPrice(product.price)}</p>
+                <p className="mt-1 text-xs text-ink-faint">
+                  Precio sin impuestos {formatPrice(precioSinImpuestos(product.price))}
+                </p>
+              </>
             )}
           </div>
+
+          {product.price !== undefined && !product.priceOnRequest && (
+            <div className="mt-4 space-y-2">
+              {/* Descuento por transferencia: se aplica solo en el checkout. */}
+              <div className="rounded-xl border border-[#00a650]/30 bg-[#00a650]/[0.08] p-3">
+                <p className="text-sm font-bold text-[#00a650]">
+                  10% OFF pagando por transferencia
+                </p>
+                <p className="mt-0.5 text-sm text-ink-soft">
+                  Precio por transferencia:{" "}
+                  <span className="text-base font-extrabold text-[#00a650]">
+                    {formatPrice(precioTransferencia(product.price))}
+                  </span>
+                </p>
+                <p className="mt-0.5 text-xs text-ink-faint">
+                  El descuento se aplica automáticamente al elegir transferencia.
+                </p>
+              </div>
+
+              {/* Cuotas: siempre con la palabra "con interés" y el total final. */}
+              <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 text-sm text-ink-soft">
+                <p>
+                  Hasta{" "}
+                  <span className="font-bold tabular-nums text-ink">
+                    {planCuotas(product.price).cantidad} cuotas de{" "}
+                    {formatPrice(planCuotas(product.price).valorCuota)}
+                  </span>{" "}
+                  <span className="font-bold text-amber">con interés</span>
+                </p>
+                <p className="mt-0.5">
+                  Total final:{" "}
+                  <span className="font-bold tabular-nums text-ink">
+                    {formatPrice(planCuotas(product.price).total)}
+                  </span>
+                </p>
+                <p className="mt-0.5 text-xs text-ink-faint">
+                  El valor exacto de cada cuota se confirma en el checkout.
+                </p>
+              </div>
+            </div>
+          )}
 
           <p className="mt-4 text-sm leading-relaxed text-ink-soft">
             {product.shortDescription}
