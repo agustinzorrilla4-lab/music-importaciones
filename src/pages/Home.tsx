@@ -42,15 +42,15 @@ export default function Home() {
               </p>
             </div>
             <p className="mt-8 text-xs font-bold uppercase tracking-[0.2em] text-cyan">
-              Importando audio y tecnología desde 2022
+              Importación de audio y tecnología · Desde 2022
             </p>
             <h1 className="mt-3 max-w-2xl text-4xl font-extrabold leading-[1.08] text-ink sm:text-5xl lg:text-6xl">
-              El modelo <span className="text-cyan">exacto</span> que pediste. Sin
+              Especificaciones <span className="text-cyan">verificadas</span>. Sin
               sorpresas.
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
-              Te decimos el código de modelo, la RAM real y qué incluye la caja antes de
-              que compres. Más de 900 ventas online desde 2022.
+              Publicamos el código de modelo, la memoria física y el contenido de la caja
+              de cada producto. Más de 900 operaciones concretadas.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/catalogo" className="btn bg-cyan text-deep shadow-[0_12px_30px_rgba(34,215,210,0.25)] hover:-translate-y-0.5 hover:brightness-105 focus-visible:ring-cyan">
