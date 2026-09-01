@@ -45,12 +45,12 @@ export default function Home() {
               Importación de audio y tecnología · Desde 2022
             </p>
             <h1 className="mt-3 max-w-2xl text-4xl font-extrabold leading-[1.08] text-ink sm:text-5xl lg:text-6xl">
-              Especificaciones <span className="text-cyan">verificadas</span>. Sin
-              sorpresas.
+              Fanáticos del sonido y de la{" "}
+              <span className="text-cyan">calidad</span>.
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
-              Publicamos el código de modelo, la memoria física y el contenido de la caja
-              de cada producto. Más de 900 operaciones concretadas.
+              Nos dedicamos a elegir: el mejor producto, con las mejores características,
+              al mejor precio. Más de 900 operaciones concretadas.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/catalogo" className="btn bg-cyan text-deep shadow-[0_12px_30px_rgba(34,215,210,0.25)] hover:-translate-y-0.5 hover:brightness-105 focus-visible:ring-cyan">
